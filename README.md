@@ -6,6 +6,7 @@
 - Mediapipe provides a suite of libraries that can be used. We will use:
   - Landmark for hand landmark detection
     [Mediapipe Hand Landmark Detection website](https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker)
+    [Github repository](https://github.com/google-ai-edge/mediapipe/blob/master/docs/solutions/hands.md)
 
 ## Encountered bugs & problems
 

@@ -1,6 +1,9 @@
 # Ignore the virtual environment directory
 myenv/
 
+# Ignore Dataset library
+dataset/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

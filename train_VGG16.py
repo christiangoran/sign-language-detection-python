@@ -7,7 +7,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Flatten
 from tensorflow.keras.optimizers import Adam
 
-# Path to your dataset
+# Path to dataset
 DATA_DIR = 'Data'
 
 # ImageDataGenerator for data augmentation and rescaling
@@ -30,7 +30,7 @@ validation_generator = datagen.flow_from_directory(
     subset='validation'
 )
 
-# Load the VGG16 model with pre-trained ImageNet weights, excluding the top layers
+# Load the VGG16 model
 vgg16_base = VGG16(weights='imagenet', include_top=False,
                    input_shape=(224, 224, 3))
 
@@ -45,18 +45,18 @@ model = Sequential([
     Dense(len(train_generator.class_indices), activation='softmax')
 ])
 
-# Compile the model
+# Compile
 model.compile(optimizer=Adam(), loss='categorical_crossentropy',
               metrics=['accuracy'])
 
-# Train the model
+# Train
 history = model.fit(
     train_generator,
     epochs=10,
     validation_data=validation_generator
 )
 
-# Evaluate the model's performance
+# Evaluate performance
 loss, accuracy = model.evaluate(validation_generator)
 print(f'Test Loss: {loss}')
 print(f'Test Accuracy: {accuracy}')

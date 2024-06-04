@@ -1,65 +1,55 @@
-import os
 import cv2
+from cvzone.HandTrackingModule import HandDetector
+import os
+import numpy as np
+import math
 import time
-import uuid
 
-# Creating a directory to store all the dataset images
-DATA_DIR = 'dataset'
-if not os.path.exists(DATA_DIR):
-    os.makedirs(DATA_DIR)
+cap = cv2.VideoCapture(0)
+detector = HandDetector(maxHands=1, detectionCon=0.8)
 
-# Number of hand signs I want to collect images for
-labels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
-          'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-number_of_images = 100
+offset = 20
+imgSize = 224
 
-# Function to wait for spacebar press to continue
+folder = 'Data/C'
+counter = 0
 
+while True:
+    success, img = cap.read()
+    hands, img = detector.findHands(img)
+    if hands:
+        hand = hands[0]
+        x, y, w, h = hand['bbox']
 
-def wait_for_space():
-    print("Press the spacebar to continue to the next label...")
-    while True:
-        if cv2.waitKey(1) & 0xFF == ord(' '):
-            break
+        imgWhite = np.ones((imgSize, imgSize, 3), np.uint8) * 255
+        imgCrop = img[y-offset:y+h+offset, x-offset:x+w+offset]
 
+        imgCropShape = imgCrop.shape
 
-# Try different indices to find the correct webcam
-webcam_index = 0  # Start with 0, then try 1, 2, etc. if needed
+        aspectRatio = h/w
 
-# I will use the OpenCV library to capture images from the webcam
-for label in labels:
-    label_dir = os.path.join(DATA_DIR, label)
-    if not os.path.exists(label_dir):
-        os.makedirs(label_dir)
+        if aspectRatio > 1:
+            k = imgSize/h
+            wCal = math.ceil(k*w)
+            imgResize = cv2.resize(imgCrop, (wCal, imgSize))
+            imgResizeShape = imgResize.shape
+            wGap = math.ceil((imgSize - wCal)/2)
+            imgWhite[:, wGap:wCal+wGap] = imgResize
 
-    cap = cv2.VideoCapture(webcam_index)
-    if not cap.isOpened():
-        print(f"Error: Could not open camera with index {webcam_index}")
-        cap.release()
-        continue
+        else:
+            k = imgSize/w
+            hCal = math.ceil(k*h)
+            imgResize = cv2.resize(imgCrop, (imgSize, hCal))
+            imgResizeShape = imgResize.shape
+            hGap = math.ceil((imgSize - hCal)/2)
+            imgWhite[hGap:hCal+hGap, :] = imgResize
 
-    print('Collecting images for {}'.format(label))
-    time.sleep(2)
-    for imgnum in range(number_of_images):
-        ret, frame = cap.read()
-        if not ret:
-            print("Error: Failed to capture image")
-            break
+        cv2.imshow('ImageCrop', imgCrop)
+        cv2.imshow('ImageWhite', imgWhite)
 
-        imgname = os.path.join(label_dir, label + '.' +
-                               '{}.jpg'.format(str(uuid.uuid1())))
-        cv2.imwrite(imgname, frame)
-        # Display how many images have been collected out of the 100 for each label
-        cv2.putText(frame, f'Label: {label} | Image: {imgnum+1}/{number_of_images}', (10, 30),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2, cv2.LINE_AA)
-        cv2.imshow('frame', frame)
-        time.sleep(0.5)
-
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
-    cap.release()
-    cv2.destroyAllWindows()
-
-    # Wait for spacebar to continue to the next label
-    wait_for_space()
+    cv2.imshow('Image', img)
+    key = cv2.waitKey(1)
+    if key == ord('s'):
+        counter += 1
+        cv2.imwrite(f'{folder}/Image_{time.time()}.jpg', imgWhite)
+        print(counter)

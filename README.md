@@ -20,6 +20,12 @@
 
 - The letter 'z' has a movement required to identify the letter. Without the movement it is just the letter 'd'
 
+  - I will leave this letter out of the model
+
+- The model is not working properly. It is identifying the wrong letters.
+  - I tried using another pre trained model (Randomforestclassifier) but this didn't make any difference.
+  - I re trained the model, this actually makes the model predict different kind of letters when testing.
+
 ## Recognition and sources
 
 - Great tutorial by Ivan Goncharov [Youtube Channel](https://www.youtube.com/watch?v=a99p_fAr6e4&list=PL0FM467k5KSyt5o3ro2fyQGt-6zRkHXRv)

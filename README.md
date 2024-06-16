@@ -124,6 +124,8 @@ Evaluation of the model:
 
 Model for real-time interpretation: In tests of real-time interpretation using the model, it correctly interpreted the three different hand gestures.
 
+![Handsign-'B'](assets/live-b.png)
+
 Model for analyzing already taken photos: In tests of the Google Colab model, it also correctly interpreted the hand gestures.
 
 ![Handsign-'A'](assets/Unknown-5.png)

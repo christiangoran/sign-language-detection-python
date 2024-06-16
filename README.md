@@ -47,16 +47,16 @@ Collect images for each ASL alphabet and prepare the dataset.
    - Run the `collect_images.py` script to capture images of hand gestures for each alphabet.
    - Adjust the `folder` variable to specify which letter you are collecting images for.
 
-# Code snippets
-
+```
 python collect_images.py
+```
 
 2. **Create Dataset**:
    - Run the `create_dataset.py` script to process the collected images and save them into a dataset.
 
-# Code snippets
-
+```
 python create_dataset.py
+```
 
 ## Methodology and Data
 
@@ -97,17 +97,17 @@ There are two different versions of the final application:
 
 Train the VGG16 model using the prepared dataset.
 
-# Code snippets
-
+```
 python train_vgg16.py
+```
 
 ## Running the Model
 
 Use the trained model to recognize hand gestures in real-time via a webcam.
 
-# Code snippets
-
+```
 python run_model.py
+```
 
 ## Results and Data Analysis
 

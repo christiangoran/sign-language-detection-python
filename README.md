@@ -70,6 +70,8 @@ The file is named `collect_images.py` and can be found under Github Repository.
 
 Below are examples of how the images look.
 
+![Images](assets/handsigns_dataset.png)
+
 I chose to use a pre-trained VGG16 model as the basis for my model. VGG16 is a deep convolutional network model effective for image classification tasks. I froze the pre-trained layers in VGG16 and added fully connected layers on top to adapt it to the specific task.
 
 The model consists of the following layers:
@@ -123,6 +125,10 @@ Evaluation of the model:
 Model for real-time interpretation: In tests of real-time interpretation using the model, it correctly interpreted the three different hand gestures.
 
 Model for analyzing already taken photos: In tests of the Google Colab model, it also correctly interpreted the hand gestures.
+
+![Handsign-'A'](assets/Unknown-5.png)
+![Handsign-'B'](assets/Unknown-6.png)
+![Handsign-'C'](assets/Unknown-7.png)
 
 ## Interpretation and Conclusions
 

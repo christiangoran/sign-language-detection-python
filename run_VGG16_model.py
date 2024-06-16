@@ -73,8 +73,8 @@ while True:
         predicted_label = predict_gesture(imgWhite)
         cv2.rectangle(img, (x-offset, y-offset),
                       (x+w+offset, y+h+offset), (0, 255, 0), 2)
-        cv2.putText(img, predicted_label, (x, y-5),
-                    cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
+        cv2.putText(img, predicted_label, (x, y-50),
+                    cv2.FONT_HERSHEY_SIMPLEX, 5, (0, 255, 0), 2, cv2.LINE_AA)
 
     cv2.imshow('Hand Gesture Recognition', img)
     if cv2.waitKey(1) & 0xFF == ord('q'):
